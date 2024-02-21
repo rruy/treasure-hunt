@@ -13,6 +13,7 @@ $ rails s
 ### Create a new user
 
 POST localhost:3000/api/sign_up
+
 Payload Json:
 
 ```
@@ -27,6 +28,7 @@ Payload Json:
 ### Authorization User
 
 POST localhost:3000/api/sign_in
+
 Payload Json:
 
 ```
@@ -38,6 +40,7 @@ Payload Json:
 
 ### Access Informations about Winners
 GET localhost:3000/api/winners?page=1
+
 Headers: 
 
 ```
