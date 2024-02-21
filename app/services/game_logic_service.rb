@@ -18,11 +18,4 @@ class GameLogicService
 
     RADIUS_OF_EARTH * c
   end
-
-  # Monkey-patch Float class to add a method to convert degrees to radians
-  class Float
-    def to_radians
-      self * Math::PI / 180
-    end
-  end
 end

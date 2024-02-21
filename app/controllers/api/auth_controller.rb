@@ -1,6 +1,4 @@
-class Api::AuthController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
+class Api::AuthController < Api::ApiController
   def sign_up
     @user = User.new(user_params)
 
