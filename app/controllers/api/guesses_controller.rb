@@ -2,39 +2,36 @@ require_relative '../../services/game_logic_service'
 
 class Api::GuessesController < Api::ApiController
   before_action :authenticate_user!
+  before_action :set_game, only: [:create]
 
   def create
-    message = ''
-    @guess = Guess.new(guess_params)
-    @guess.user_id = current_user.id
-
-    distance = GameLogicService.new.calculate_distance(@guess.latitude, @guess.longitude)
-
-    if distance.to_i < 1000
-      if !current_user.winner?
-        current_user.update(winner: true)
-        message = "User #{current_user.email} is new Winner!"
-        send_email
-      else
-        message = "User #{current_user.email} has already Won!"
-      end
-    end
-
     if @guess.save
-      render json: { guess: @guess, message: message }, status: :created
+      message = @game.check_winner(current_user, @guess.latitude, @guess.longitude)
+      render_success_response(message)
     else
-      render json: @guess.errors, status: :unprocessable_entity
+      render_error_response(@guess.errors)
     end
   end
 
   private
 
-  def send_email
-    begin
-      UserMailer.with(user: current_user).winner_confirmation_email.deliver_now
-    rescue => e
-      logger.info "Error when processing User mailer #{current_user.email}"
-    end
+  def set_game
+    @guess = build_guess
+    @game = GameLogicService.new
+  end
+
+  def build_guess
+    guess = Guess.new(guess_params)
+    guess.user_id = current_user.id
+    guess
+  end
+
+  def render_success_response(message)
+    render json: { guess: @guess, message: message }, status: :created
+  end
+
+  def render_error_response(errors, status = :unprocessable_entity)
+    render json: { errors: errors }, status: status
   end
 
   def guess_params
