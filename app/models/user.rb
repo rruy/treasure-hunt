@@ -12,8 +12,7 @@ class User < ApplicationRecord
   private
 
   def validate_winner_status
-    if winner_changed? &&
-       winner? &&
+    if winner? &&
        winner_previously_changed?
       errors.add(:winner, 'User can only become a winner once')
     end
@@ -22,8 +21,7 @@ class User < ApplicationRecord
   def send_winner_email
     begin
       UserMailer.with(user: current_user).winner_confirmation_email.deliver_now
-    rescue => e
-      # logger.info "Error when processing User mailer #{current_user.email}"
+    rescue
     end
   end
 end
