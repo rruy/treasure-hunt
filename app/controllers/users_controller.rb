@@ -1,40 +1,36 @@
-# app/controllers/users_controller.rb
 class UsersController < ApplicationController
-  before_action :set_user, only: %w[show edit update destroy]
+  before_action :set_user, only: %w[show update destroy]
 
   def index
     @users = User.all
+    render json: @users
   end
 
-  def show; end
-
-  def new
-    @user = User.new
+  def show
+    render json: @user
   end
-
-  def edit; end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      render json: @user, status: :created
     else
-      render :new
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      render json: @user
     else
-      render :edit
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    head :no_content
   end
 
   private

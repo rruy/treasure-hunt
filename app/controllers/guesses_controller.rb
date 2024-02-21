@@ -1,4 +1,5 @@
 class GuessesController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     @guess = Guess.new(guess_params)
@@ -11,14 +12,10 @@ class GuessesController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      if @guess.save
-        format.html { redirect_to @guess, notice: 'Guess was successfully created.' }
-        format.json { render :show, status: :created, location: @guess }
-      else
-        format.html { render :new }
-        format.json { render json: @guess.errors, status: :unprocessable_entity }
-      end
+    if @guess.save
+      render json: @guess, status: :created
+    else
+      render json: @guess.errors, status: :unprocessable_entity
     end
   end
 
