@@ -2,13 +2,28 @@
 
 ## Treasure Hunt Game
 
+The objective this application is to compare two locations, one where can find the treasure and other from guess user location, case the guess location distance is less than 1000 the user is the Winner. The sistem can is set user as the winner only time. The sistem should identify that user already won and return error.
+
 This appplication use:
 
  - Ruby 3.2
  - Rails 7
  - Postgres
   
-The objective this application is to compare two locations, one where can find the treasure and other from guess user location, case the guess location distance is less than 1000 the user is the Winner. The sistem can is set user as the winner only time. The sistem should identify that user already won and return error.
+##### Gem used:
+
+- Devise / Devise Token
+- Kaminari
+- JsonApi-Serializer
+- Rswag
+
+##### Features:
+
+- Authorization and Authentication with Devise.
+- Serialize Objects Json to Response parsed data from requests.
+- Paginations and allow choosed field and order asc or desc. 
+- Documentation using Swagger Api Docs.
+- Calculate Distance using Algorithm Radios with Longiture and Latitude.
 
 All information about this challenge can be found in home page.
 
