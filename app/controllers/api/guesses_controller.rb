@@ -27,7 +27,7 @@ class Api::GuessesController < Api::ApiController
   end
 
   def render_success_response(message)
-    render json: { guess: @guess, message: message }, status: :created
+    render json: { guess: GuessSerializer.new(@guess), message: message }, status: :created
   end
 
   def render_error_response(errors, status = :unprocessable_entity)

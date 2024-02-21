@@ -7,8 +7,7 @@ class GameLogicService
     distance = calculate_distance(lat, lon)
 
     if distance.to_i < 1000 && !user.winner?
-      user.update(winner: true)
-      send_email
+      user.update(winner: true, distance: distance)
       "User #{user.email} is the new winner!"
     elsif user.winner?
       "User #{user.email} has already won!"
@@ -31,13 +30,5 @@ class GameLogicService
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
     RADIUS_OF_EARTH * c
-  end
-
-  def send_email
-    begin
-      UserMailer.with(user: current_user).winner_confirmation_email.deliver_now
-    rescue => e
-      # logger.info "Error when processing User mailer #{current_user.email}"
-    end
   end
 end
