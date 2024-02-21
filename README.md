@@ -1,24 +1,45 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Treasure Hunt Game
 
-Things you may want to cover:
+### Run application execute this commands
 
-* Ruby version
+```
+$ bundle install
+$ rake db:create db:migrate
+$ rails s
+```
 
-* System dependencies
+### Create a new user
 
-* Configuration
+POST localhost:3000/api/sign_up
+Payload Json:
 
-* Database creation
+```
+  {
+    "email": "user@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+  }
+```
 
-* Database initialization
 
-* How to run the test suite
+### Authorization User
 
-* Services (job queues, cache servers, search engines, etc.)
+POST localhost:3000/api/sign_in
+Payload Json:
 
-* Deployment instructions
+```
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
 
-* ...
+### Access Informations about Winners
+GET localhost:3000/api/winners?page=1
+Headers: 
+
+```
+Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJUaWNZUTF4TWFrUzF4R0t0dnhVVXp3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlNNTkV6WWk4NFRZZ25GVTc3eTViSWciLCJleHBpcnkiOiIxNzA5NzMxNTE3IiwidWlkIjoidXNlckBleGFtcGxlLmNvbSJ9
+```

@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :name, null: false, default: ''
       t.string :email, null: false, default: ''
       t.boolean :winner
+      t.bigint :distance
 
       t.timestamps
     end

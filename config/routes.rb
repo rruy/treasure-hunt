@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users
-
+  mount_devise_token_auth_for 'User', at: 'auth'
+  
   root 'home#index'
 
-  resources :users
-  resources :guesses
+  namespace :api do
+    resources :users
+    resources :guesses
+    resources :winners
+
+    post 'sign_up', to: 'auth#sign_up'
+    post 'sign_in', to: 'auth#sign_in'
+  end
 end

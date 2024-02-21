@@ -1,4 +1,4 @@
-class GuessesController < ApplicationController
+class Api::GuessesController < Api::ApiController
   before_action :authenticate_user!
 
   def create
