@@ -7,10 +7,8 @@ RSpec.describe GameLogicService do
     let(:treasure_latitude) { -27.4421 }
     let(:treasure_longitude) { -48.5062 }
 
-    EXPECT_DISTANCE_SC = 0
-    EXPECT_DISTANCE_SP = 471710
-
     context 'when given valid latitude and longitude' do
+      EXPECT_DISTANCE_SC = 0
       # Santa Catarina City Location
       let(:user_latitude) { -27.4421 }
       let(:user_longitude) { -48.5062 }
@@ -22,6 +20,7 @@ RSpec.describe GameLogicService do
     end
 
     context 'when given invalid latitude and longitude' do
+      EXPECT_DISTANCE_SP = 471710
       # Sao Paulo City Location
       let(:user_latitude) { -23.5489 }
       let(:user_longitude) { -46.6388 }

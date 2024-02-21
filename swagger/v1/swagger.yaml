@@ -1,0 +1,127 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/sign_up":
+    post:
+      summary: sign up
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - email
+              - password
+              - password_confirmation
+  "/sign_in":
+    post:
+      summary: sign in
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/guesses":
+    post:
+      summary: create guess
+      tags:
+      - Guesses
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+              required:
+              - latitude
+              - longitude
+  "/api/winners":
+    get:
+      summary: list winners
+      tags:
+      - Winners
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: sort_column
+        in: query
+        description: Column to sort by (e.g., name, distance)
+        schema:
+          type: string
+      - name: sort_direction
+        in: query
+        description: Sort direction (asc or desc)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  winners:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        distance:
+                          type: number
+                      required:
+                      - id
+                      - name
+                      - distance
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

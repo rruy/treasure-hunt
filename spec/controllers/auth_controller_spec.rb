@@ -1,5 +1,5 @@
 # spec/controllers/api/auth_controller_spec.rb
-require 'rails_helper'
+require 'swagger_helper'
 
 RSpec.describe Api::AuthController, type: :controller do
   describe 'POST #sign_up' do
@@ -60,3 +60,66 @@ RSpec.describe Api::AuthController, type: :controller do
     end
   end
 end
+
+
+# require 'rails_helper'
+# require 'swagger_helper'
+
+# RSpec.describe 'Api::', type: :request do
+#   path '/sign_up' do
+#     post('sign up') do
+#       tags 'Authentication'
+#       consumes 'application/json'
+#       parameter name: :user, in: :body, schema: {
+#         type: :object,
+#         properties: {
+#           email: { type: :string },
+#           password: { type: :string },
+#           password_confirmation: { type: :string }
+#         },
+#         required: ['email', 'password', 'password_confirmation']
+#       }
+
+#       response(201, 'successful') do
+#         let(:user) { { email: 'test@example.com', password: 'password', password_confirmation: 'password' } }
+
+#         run_test!
+#       end
+
+#       response(422, 'unprocessable entity') do
+#         let(:user) { { email: '', password: '', password_confirmation: '' } }
+
+#         run_test!
+#       end
+#     end
+#   end
+
+#   path '/sign_in' do
+#     post('sign in') do
+#       tags 'Authentication'
+#       consumes 'application/json'
+#       parameter name: :credentials, in: :body, schema: {
+#         type: :object,
+#         properties: {
+#           email: { type: :string },
+#           password: { type: :string }
+#         },
+#         required: ['email', 'password']
+#       }
+
+#       response(200, 'successful') do
+#         let(:user) { create(:user, email: 'test@example.com', password: 'password') }
+#         let(:credentials) { { email: user.email, password: 'password' } }
+
+#         run_test!
+#       end
+
+#       response(401, 'unauthorized') do
+#         let(:user) { create(:user, email: 'test@example.com', password: 'password') }
+#         let(:credentials) { { email: user.email, password: 'wrong_password' } }
+
+#         run_test!
+#       end
+#     end
+#   end
+# end

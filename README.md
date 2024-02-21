@@ -46,3 +46,16 @@ Headers:
 ```
 Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJUaWNZUTF4TWFrUzF4R0t0dnhVVXp3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlNNTkV6WWk4NFRZZ25GVTc3eTViSWciLCJleHBpcnkiOiIxNzA5NzMxNTE3IiwidWlkIjoidXNlckBleGFtcGxlLmNvbSJ9
 ```
+
+
+### Generate Swagger Files
+
+Run this command in order to generate docs of new endpoint
+```
+rails generate rspec:swagger Api::AuthController  --spec_path integration
+rake rswag:specs:swaggerize
+```
+After that you can access url
+
+localhost:3000/api-docs
+
