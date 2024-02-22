@@ -3,19 +3,15 @@ class Api::WinnersController < Api::ApiController
 
   def index
     winners = User.where(winner: true)
-                  .order("#{sort_column} #{sort_direction}")
-                  .page(params[:page]).per(params[:per_page])
+                  .order("distance #{sort_distance}")
+                  .page(page_param).per(10)
 
     render json: UserSerializer.new(winners)
   end
 
   private
 
-  def sort_column
-    %w[distance].include?(params[:sort]) ? params[:sort] : 'distance'
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  def sort_distance
+    %w[asc desc].include?(params[:sort_distance]) ? params[:sort_distance] : 'asc'
   end
 end

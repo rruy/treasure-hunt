@@ -1,99 +1,151 @@
-# README
+# Treasure Hunt
 
-## Treasure Hunt Game
+The objective of this application is to register a Treasure location using Latitude and Longitude coordinates.
 
-The objective this application is to compare two locations, one where can find the treasure and other from guess user location, case the guess location distance is less than 1000 the user is the Winner. The sistem can is set user as the winner only time. The sistem should identify that user already won and return error.
+Based on this location, participants can submit location suggestions to find this treasure using latitude and longitude coordinates.
 
-This appplication use:
+Using the information provided by the user, the system calculates the distance using the Haversine formula to determine the distance between the two points: the treasure location and the suggested location. If the distance is less than 1000, the user is considered a winner.
 
- - Ruby 3.2
- - Rails 7
- - Postgres
-  
-##### Gem used:
+### Technology:
+
+This application uses:
+
+- Ruby 3.2
+- Rails 7
+- PostgreSQL
+
+#### Gems used:
 
 - Devise / Devise Token
 - Kaminari
 - JsonApi-Serializer
 - Rswag
 
-##### Features:
+#### Features:
 
 - Authorization and Authentication with Devise.
-- Serialize Objects Json to Response parsed data from requests.
-- Paginations and allow choosed field and order asc or desc. 
-- Documentation using Swagger Api Docs.
-- Calculate Distance using Algorithm Radios with Longiture and Latitude.
+- Serialization of JSON objects for response data from requests.
+- Pagination allowing choice of fields and order (asc or desc).
+- Documentation using Swagger API Docs.
+- Distance calculation using the Haversine algorithm with Longitude and Latitude.
 
-All information about this challenge can be found in home page.
-
-#### Run application execute this commands
+To run the application, execute the following commands:
 
 ```
-$ bundle install
-$ rake db:create db:migrate
-$ rails s
+bundle install
+bundle exec rake db:create db:migrate db:seed
+bundle exec rails s
 ```
 
-#### Create a new user
+### Routes to Use the System:
 
-POST localhost:3000/api/sign_up
+#### Register a new user:
 
-Payload Json:
+URL: `localhost:3000/users`
 
-```
-  {
-    "email": "user@example.com",
-    "password": "password123",
-    "password_confirmation": "password123"
-  }
-```
+Method: `POST`
 
+Payload:
 
-#### Authorization User
-
-POST localhost:3000/api/sign_in
-
-Payload Json:
-
-```
-{
-  "email": "user@example.com",
-  "password": "password123"
+```json
+{ 
+  "name": "John",
+  "email": "email@domain",
+  "password": "pass123456",
+  "password_confirmation": "pass123456"
 }
 ```
 
-#### Access Informations about Winners
-GET localhost:3000/api/winners?page=1
+This will return the application access token, similar to this:
 
-Headers: 
+```json
+{
+    "user": {
+        "email": "email@domain",
+        "provider": "email",
+        "uid": "email@domain",
+        "id": 2,
+        "name": "John",
+        "winner": true,
+        "distance": 0,
+        "created_at": "2024-02-21T14:27:58.241Z",
+        "updated_at": "2024-02-22T17:25:03.414Z",
+        "allow_password_change": false,
+        "authentication_token": null
+    },
+    "token": "Bearer eyJhY2Nlc3MtdG9rZW4iOiJma2haRXdFMW5nQ19yNUlBa2ZaX2hnIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlFQYno0aVZBSHZBd2ZETjhKaXV5bXciLCJleHBpcnkiOiIxNzA5ODMyMzAzIiwidWlkIjoidXNlcjJAZXhhbXBsZS5jb20ifQ=="
+}
+```
+
+From now on, it will be necessary to pass the following parameter in the header of the requests:
 
 ```
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJUaWNZUTF4TWFrUzF4R0t0dnhVVXp3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlNNTkV6WWk4NFRZZ25GVTc3eTViSWciLCJleHBpcnkiOiIxNzA5NzMxNTE3IiwidWlkIjoidXNlckBleGFtcGxlLmNvbSJ9
+Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJma2haRXdFMW5nQ19yNUlBa2ZaX2hnIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlFQYno0aVZBSHZBd2ZETjhKaXV5bXciLCJleHBpcnkiOiIxNzA5ODMyMzAzIiwidWlkIjoidXNlcjJAZXhhbXBsZS5jb20ifQ==
 ```
 
+If the correct token is not used, a 401 Not Authorized error will be returned.
 
-### Swagger Api Docs
+#### To register a Treasure Location:
 
-To access api-docs with swagger user this URL
+URL: `localhost:3000/treasure_locations`
+
+Method: `POST`
+
+Header: `Authorization : Bearer`
+
+Payload:
+
+```json
+{
+  "name": "Location Name",
+  "latitude": 9.00,
+  "longitude": 1.00,
+  "active": true
+}
 ```
-localhost:3000/api-docs
+
+#### To submit location suggestions for the treasure:
+
+URL: `localhost:3000/guesses`
+
+Method: `POST`
+
+Header: `Authorization : Bearer`
+
+Payload:
+
+```json
+{
+    "latitude": -27.4421,
+    "longitude": -48.5062
+}
 ```
 
-Examples:
+Based on the logged-in user, the application associates the `user_id` with the guess. If the distance is less than 1000, the `guessed` field in the Guess entity is set to true.
 
-#### Auth
+#### To list location suggestions for the treasure:
 
-![Alt text](/public/Swagger-1.png?raw=true "Auth")
+URL: `localhost:3000/guesses`
 
-#### Sign_In
+Method: `GET`
 
-![Alt text](/public/Swagger-2.png?raw=true "Sign_in")
+Header: `Authorization : Bearer`
 
-#### Guess
+#### To list only Winners:
 
-![Alt text](/public/Swagger-3.png?raw=true "Guess")
+URL: `localhost:3000/winners`
 
-#### List of winners
+Method: `GET`
 
-![Alt text](/public/Swagger-4.png?raw=true "Winners")
+Header: `Authorization : Bearer`
+
+#### To access the application documentation, visit the following URL:
+
+URL: `localhost:3000/api-docs`
+
+Method: `GET`
+
+Example:
+
+![Alt text](/public/swagger.png?raw=true "Api-Docs")
+

@@ -4,6 +4,20 @@ class Api::GuessesController < Api::ApiController
   before_action :authenticate_user!
   before_action :set_game, only: [:create]
 
+  def index
+    @guesses = Guess.all
+    render json: { guess: GuessSerializer.new(@guesses) }
+  end
+
+  def show
+    @guess = Guess.find_by(id: params[:id])
+    if @guess.present?
+      render json: { guess: GuessSerializer.new(@guesses) }
+    else
+      render json: { }, status: :not_found
+    end
+  end
+
   def create
     if @guess.save
       message = @game.check_winner(current_user, @guess)

@@ -4,11 +4,173 @@ info:
   title: API V1
   version: v1
 paths:
-  "/api/users":
-    post:
-      summary: sign up
+  "/api/guesses":
+    get:
+      summary: List all Guesses
       tags:
-      - Authentication
+      - Guesses
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+  "/api/guesses/{id}":
+    get:
+      summary: Get Guess by ID
+      tags:
+      - Guesses
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+  "/api/treasure_locations":
+    get:
+      summary: List all treasure locations
+      tags:
+      - Treasure Locations
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+    post:
+      summary: create new resource
+      tags:
+      - Treasure Locations
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                latitude:
+                  type: bigdecimal
+                longitude:
+                  type: bigdecimal
+                active:
+                  type: boolean
+              required:
+              - name
+              - latitude
+              - longitude
+  "/api/treasure_locations/{id}":
+    put:
+      summary: Update resource
+      tags:
+      - Treasure Locations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                latitude:
+                  type: bigdecimal
+                longitude:
+                  type: bigdecimal
+                active:
+                  type: boolean
+              required:
+              - name
+              - latitude
+              - longitude
+    get:
+      summary: get treasure location
+      tags:
+      - Treasure Locations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+  "/api/users":
+    get:
+      summary: List all users
+      tags:
+      - Users
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+    post:
+      summary: create new user
+      tags:
+      - Users
       parameters: []
       responses:
         '201':
@@ -31,12 +193,22 @@ paths:
               - email
               - password
               - password_confirmation
-  "/api/sessions/sign_in":
-    post:
-      summary: sign in
+  "/api/users/{id}":
+    put:
+      summary: Update user
       tags:
-      - Authentication
-      parameters: []
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: successful
@@ -55,86 +227,42 @@ paths:
               required:
               - email
               - password
-  "/api/guesses":
-    post:
-      summary: create guess
-      tags:
-      - Guesses
-      parameters: []
-      responses:
-        '201':
-          description: successful
-        '401':
-          description: unauthorized
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                latitude:
-                  type: number
-                longitude:
-                  type: number
-              required:
-              - latitude
-              - longitude
-      security:
-        - BearerAuth: []
-  "/api/winners":
     get:
-      summary: list winners
+      summary: get user
       tags:
-      - Winners
-      security:
-      - bearer_auth: []
+      - Users
       parameters:
-      - name: sort_column
-        in: query
-        description: Column to sort by (e.g., name, distance)
+      - name: id
+        in: path
+        required: true
         schema:
-          type: string
-      - name: sort_direction
-        in: query
-        description: Sort direction (asc or desc)
+          type: integer
+      - name: Authorization
+        in: header
+        required: true
         schema:
           type: string
       responses:
         '200':
           description: successful
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  winners:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        distance:
-                          type: number
-                      required:
-                      - id
-                      - name
-                      - distance
         '401':
           description: unauthorized
-      security:
-        - BearerAuth: []
-security:
-  - BearerAuth: []
-
-components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-
+  "/api/winners?page=1":
+    get:
+      summary: List winners
+      tags:
+      - Winners
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
 servers:
 - url: https://{defaultHost}
   variables:

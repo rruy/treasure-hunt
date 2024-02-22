@@ -4,4 +4,8 @@ class Api::ApiController < ApplicationController
   def index
     render json: { message: 'Authenticated successfully!' }
   end
+
+  def page_param
+    params[:page].nil? ? 1 : params[:page]
+  end
 end

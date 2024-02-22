@@ -1,37 +1,8 @@
 # require 'swagger_helper'
 
 # RSpec.describe 'api/auth', type: :request do
-
-#   path '/api/sign_up' do
-#     post('sign up') do
-#       tags 'Authentication'
-#       consumes 'application/json'
-#       parameter name: :user, in: :body, schema: {
-#         type: :object,
-#         properties: {
-#           email: { type: :string },
-#           password: { type: :string },
-#           password_confirmation: { type: :string }
-#         },
-#         required: ['email', 'password', 'password_confirmation']
-#       }
-
-#       response(201, 'successful') do
-#         let(:user) { { email: 'test@example.com', password: 'password', password_confirmation: 'password' } }
-
-#         run_test!
-#       end
-
-#       response(422, 'unprocessable entity') do
-#         let(:user) { { email: '', password: '', password_confirmation: '' } }
-
-#         run_test!
-#       end
-#     end
-#   end
-
-#   path '/api/sign_in' do
-#     post('sign in') do
+#   path '/api/login' do
+#     post('login in') do
 #       tags 'Authentication'
 #       consumes 'application/json'
 #       parameter name: :credentials, in: :body, schema: {
