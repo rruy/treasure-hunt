@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/sign_up":
+  "/api/users":
     post:
       summary: sign up
       tags:
@@ -31,7 +31,7 @@ paths:
               - email
               - password
               - password_confirmation
-  "/sign_in":
+  "/api/sessions/sign_in":
     post:
       summary: sign in
       tags:
@@ -55,7 +55,7 @@ paths:
               required:
               - email
               - password
-  "/guesses":
+  "/api/guesses":
     post:
       summary: create guess
       tags:
@@ -79,6 +79,8 @@ paths:
               required:
               - latitude
               - longitude
+      security:
+        - BearerAuth: []
   "/api/winners":
     get:
       summary: list winners
@@ -120,6 +122,19 @@ paths:
                       - id
                       - name
                       - distance
+        '401':
+          description: unauthorized
+      security:
+        - BearerAuth: []
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
 servers:
 - url: https://{defaultHost}
   variables:

@@ -1,13 +1,4 @@
-class Api::AuthController < Api::ApiController
-  def sign_up
-    @user = User.new(user_params)
-
-    if @user.save
-      render json: { user: @user, token: @user.authentication_token }, status: :created
-    else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
+class Api::SessionsController < Api::ApiController
 
   def sign_in
     @user = User.find_for_database_authentication(email: params[:email])

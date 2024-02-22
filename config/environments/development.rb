@@ -63,6 +63,8 @@ Rails.application.configure do
   config.log_level = :info
   config.logger = ActiveSupport::Logger.new(STDOUT)
 
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000' # Replace with your actual host
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

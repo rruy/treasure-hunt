@@ -1,5 +1,5 @@
 class Api::UsersController < Api::ApiController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:create]
   before_action :set_user, only: %w[show update destroy]
 
   def index
@@ -12,12 +12,13 @@ class Api::UsersController < Api::ApiController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params_new)
 
     if @user.save
-      render json: UserSerializer.new(@user), status: :created
+      @user.update(authentication_token: @user.create_new_auth_token)
+      render json: { user: UserSerializer.new(@user), token: @user.authentication_token }, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -38,6 +39,10 @@ class Api::UsersController < Api::ApiController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_params_new
+    params.permit(:email, :password, :password_confirmation)
   end
 
   def user_params

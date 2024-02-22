@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount_devise_token_auth_for 'User', at: 'auth'
-  
+
   root 'home#index'
 
   namespace :api do
@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     resources :guesses
     resources :winners
 
-    post 'sign_up', to: 'auth#sign_up'
     post 'sign_in', to: 'auth#sign_in'
   end
 end
