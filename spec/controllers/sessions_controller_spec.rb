@@ -9,7 +9,7 @@ RSpec.describe Api::SessionsController, type: :controller do
 
       it 'returns the user and token' do
         post :create, params: valid_credentials
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to include('user', 'token')
       end
     end

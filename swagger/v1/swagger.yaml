@@ -43,6 +43,31 @@ paths:
           description: unauthorized
         '404':
           description: not found
+  "/api/login":
+    post:
+      summary: create session
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+              - password_confirmation
   "/api/treasure_locations":
     get:
       summary: List all treasure locations
