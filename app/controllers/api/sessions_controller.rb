@@ -1,6 +1,6 @@
 class Api::SessionsController < Api::ApiController
 
-  def sign_in
+  def create
     @user = User.find_for_database_authentication(email: params[:email])
 
     if @user && @user.valid_password?(params[:password])
@@ -14,6 +14,6 @@ class Api::SessionsController < Api::ApiController
   private
 
   def user_params
-    params.permit(:email, :password, :password_confirmation)
+    params.permit(:email, :password)
   end
 end
