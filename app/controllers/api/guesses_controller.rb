@@ -6,7 +6,7 @@ class Api::GuessesController < Api::ApiController
 
   def create
     if @guess.save
-      message = @game.check_winner(current_user, @guess.latitude, @guess.longitude)
+      message = @game.check_winner(current_user, @guess)
       render_success_response(message)
     else
       render_error_response(@guess.errors)

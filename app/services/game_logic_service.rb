@@ -3,16 +3,17 @@ require 'bigdecimal'
 class GameLogicService
   RADIUS_OF_EARTH = 6371e3
 
-  def check_winner(user, lat, lon)
-    distance = calculate_distance(lat, lon)
+  def check_winner(user, guess)
+    distance = calculate_distance(guess.latitude, guess.longitude)
 
     if distance.to_i < 1000 && !user.winner?
       user.update(winner: true, distance: distance)
+      guess.update(guessed: true)
       "User #{user.email} is the new winner!"
     elsif user.winner?
       "User #{user.email} has already won!"
     else
-      "Sorry, #{user.email}, you is not winner yet. Try one more time!"
+      "You didn't win this time, #{user.email}. Try playing again!"
     end
   end
 

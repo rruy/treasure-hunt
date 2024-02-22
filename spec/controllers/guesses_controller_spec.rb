@@ -31,7 +31,7 @@ RSpec.describe Api::GuessesController, type: :controller do
         result = JSON.parse(response.body)
 
         expect(response).to have_http_status(:created)
-        expect(result['message']).to eq "Sorry, #{user.email}, you is not winner yet. Try one more time!"
+        expect(result['message']).to eq "You didn't win this time, #{user.email}. Try playing again!"
         expect(user.reload.winner?).to eq(true).or(eq(false))
       end
 
