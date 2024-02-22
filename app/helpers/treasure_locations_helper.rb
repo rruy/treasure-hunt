@@ -1,0 +1,2 @@
+module TreasureLocationsHelper
+end

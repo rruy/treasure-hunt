@@ -1,7 +1,7 @@
+require 'bigdecimal'
+
 class GameLogicService
   RADIUS_OF_EARTH = 6371e3
-  TREASURE_LATITUDE = -27.4421
-  TREASURE_LONGITUDE = -48.5062
 
   def check_winner(user, lat, lon)
     distance = calculate_distance(lat, lon)
@@ -17,11 +17,13 @@ class GameLogicService
   end
 
   def calculate_distance(lat1, lon1)
-    # Convert latitude and longitude from degrees to radians
-    lat1_rad = lat1.to_radians
-    lon1_rad = lon1.to_radians
-    lat2_rad = TREASURE_LATITUDE.to_radians
-    lon2_rad = TREASURE_LONGITUDE.to_radians
+    treasure = TreasureLocation.where(active: true).order(created_at: :asc).first
+
+    lat1_rad = degrees_to_radians(lat1)
+    lon1_rad = degrees_to_radians(lon1)
+
+    lat2_rad = degrees_to_radians(treasure.latitude)
+    lon2_rad = degrees_to_radians(treasure.longitude)
 
     # Haversine formula
     dlon = lon2_rad - lon1_rad
@@ -29,6 +31,10 @@ class GameLogicService
     a = Math.sin(dlat/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon/2)**2
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
-    RADIUS_OF_EARTH * c
+    (RADIUS_OF_EARTH * c).to_i
+  end
+
+  def degrees_to_radians(degrees)
+    degrees * Math::PI / 180.0
   end
 end
