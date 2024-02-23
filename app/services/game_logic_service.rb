@@ -18,7 +18,7 @@ class GameLogicService
   end
 
   def calculate_distance(lat1, lon1)
-    treasure = TreasureLocation.where(active: true).order(created_at: :asc).first
+    treasure = Treasure.where(active: true).order(created_at: :asc).first
 
     lat1_rad = degrees_to_radians(lat1)
     lon1_rad = degrees_to_radians(lon1)

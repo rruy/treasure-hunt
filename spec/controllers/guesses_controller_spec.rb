@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::GuessesController, type: :controller do
   describe 'POST #create' do
-    let!(:treasure_location) { create(:treasure_location) }
+    let!(:treasure) { create(:treasure) }
     let(:user) { create(:user) }
     let(:valid_guess_params) { { guess: { latitude: -27.4421, longitude: -48.5062 } } }
     let(:wrong_guess_params) { { guess: { latitude: 1000, longitude: 25000 } } }

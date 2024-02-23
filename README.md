@@ -87,7 +87,7 @@ If the correct token is not used, a 401 Not Authorized error will be returned.
 
 #### To register a Treasure Location:
 
-URL: `localhost:3000/treasure_locations`
+URL: `localhost:3000/treasures`
 
 Method: `POST`
 

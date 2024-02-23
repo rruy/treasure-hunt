@@ -1,13 +1,13 @@
 require 'swagger_helper'
 
-RSpec.describe 'API::TreasureLocationsController', type: :request do
+RSpec.describe 'API::TreasuresController', type: :request do
 
   let!(:user) { create(:user) }
   let!(:auth_token) { user.create_new_auth_token }
 
-  path '/api/treasure_locations' do
+  path '/api/treasures' do
     get('List all treasure locations') do
-      tags 'Treasure Locations'
+      tags 'Treasures'
       produces 'application/json'
 
       response(200, 'successful') do
@@ -24,7 +24,7 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
   end
 
   post('create new resource') do
-    tags 'Treasure Locations'
+    tags 'Treasures'
     consumes 'application/json'
     produces 'application/json'
     parameter name: :payload, in: :body, schema: {
@@ -54,9 +54,9 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
    end
   end
 
-  path '/api/treasure_locations/{id}' do
+  path '/api/treasures/{id}' do
     put('Update resource') do
-      tags 'Treasure Locations'
+      tags 'Treasures'
       consumes 'application/json'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
@@ -73,7 +73,7 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
-        let(:id) { create(:treasure_location).id }
+        let(:id) { create(:treasure).id }
         let(:payload) { { name: 'Location 1', latitude: '9.00', longitude: '9.99', active: true } }
 
         run_test!
@@ -81,7 +81,7 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
 
       response(401, 'unauthorized') do
         let(:Authorization) { nil } # Unauthorized request
-        let(:id) { create(:treasure_location).id }
+        let(:id) { create(:treasure).id }
         let(:payload) { { name: 'Location 1', latitude: '9.00', longitude: '9.99', active: true } }
 
         run_test! do
@@ -97,14 +97,14 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
-        let(:id) { create(:treasure_location).id }
+        let(:id) { create(:treasure).id }
 
         run_test!
       end
 
       response(401, 'unauthorized') do
         let(:Authorization) { nil }
-        let(:id) { create(:treasure_location).id }
+        let(:id) { create(:treasure).id }
 
         run_test! do
           expect(response).to have_http_status(:unauthorized)

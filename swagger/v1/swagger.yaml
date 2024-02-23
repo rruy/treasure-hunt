@@ -57,7 +57,7 @@ paths:
               - email
               - password
               - password_confirmation
-  "/api/treasure_locations":
+  "/api/treasures":
     get:
       summary: List all treasure locations
       tags:
@@ -95,7 +95,7 @@ paths:
               - name
               - latitude
               - longitude
-  "/api/treasure_locations/{id}":
+  "/api/treasures/{id}":
     put:
       summary: Update resource
       tags:

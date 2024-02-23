@@ -15,7 +15,7 @@ class Api::UsersController < Api::ApiController
     @user = User.new(user_params_new)
 
     if @user.save
-      @user.update(authentication_token: @user.create_new_auth_token)
+      @user.update(authentication_token: @user.create_new_auth_token['Authorization'])
       render json: { user: UserSerializer.new(@user), token: @user.authentication_token }, status: :created
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity

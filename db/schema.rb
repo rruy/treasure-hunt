@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_185513) do
     t.boolean "guessed"
   end
 
-  create_table "treasure_locations", force: :cascade do |t|
+  create_table "treasures", force: :cascade do |t|
     t.string "name"
     t.decimal "latitude", precision: 15, scale: 10
     t.decimal "longitude", precision: 15, scale: 10
