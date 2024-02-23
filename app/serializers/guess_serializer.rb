@@ -1,4 +1,4 @@
 class GuessSerializer
   include JSONAPI::Serializer
-  attributes :user_id, :latitude, :longitude
+  attributes :id, :user_id, :latitude, :longitude
 end

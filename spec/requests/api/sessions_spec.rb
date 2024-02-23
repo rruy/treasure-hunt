@@ -6,7 +6,7 @@ RSpec.describe 'api/sessions', type: :request do
   let!(:auth_token) { user.create_new_auth_token }
 
   path '/api/sessions' do
-    post('create session') do
+    post('Create session') do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'

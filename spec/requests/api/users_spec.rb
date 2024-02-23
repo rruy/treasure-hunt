@@ -23,7 +23,7 @@ RSpec.describe 'API::UsersController', type: :request do
       end
     end
 
-    post('create new user') do
+    post('Create new User') do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
@@ -85,7 +85,7 @@ RSpec.describe 'API::UsersController', type: :request do
       end
     end
 
-    get('get user') do
+    get('Get User') do
       tags 'Users'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer

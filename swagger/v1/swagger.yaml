@@ -14,6 +14,33 @@ paths:
           description: successful
         '401':
           description: unauthorized
+    post:
+      summary: Create new Guess
+      tags:
+      - Guesses
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: unprocessable entity
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                  format: float
+                longitude:
+                  type: number
+                  format: float
+              required:
+              - latitude
+              - longitude
   "/api/guesses/{id}":
     get:
       summary: Get Guess by ID
@@ -34,7 +61,7 @@ paths:
           description: not found
   "/api/sessions":
     post:
-      summary: create session
+      summary: Create session
       tags:
       - Sessions
       parameters: []
@@ -61,16 +88,16 @@ paths:
     get:
       summary: List all treasure locations
       tags:
-      - Treasure Locations
+      - Treasures
       responses:
         '200':
           description: successful
         '401':
           description: unauthorized
     post:
-      summary: create new resource
+      summary: Create new Treasure
       tags:
-      - Treasure Locations
+      - Treasures
       parameters: []
       responses:
         '201':
@@ -99,7 +126,7 @@ paths:
     put:
       summary: Update resource
       tags:
-      - Treasure Locations
+      - Treasures
       parameters:
       - name: id
         in: path
@@ -132,7 +159,7 @@ paths:
     get:
       summary: get treasure location
       tags:
-      - Treasure Locations
+      - List Treasures
       parameters:
       - name: id
         in: path
@@ -155,7 +182,7 @@ paths:
         '401':
           description: unauthorized
     post:
-      summary: create new user
+      summary: Create new User
       tags:
       - Users
       parameters: []
@@ -210,7 +237,7 @@ paths:
               - email
               - password
     get:
-      summary: get user
+      summary: Get User
       tags:
       - Users
       parameters:

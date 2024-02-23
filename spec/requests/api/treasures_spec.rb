@@ -23,7 +23,7 @@ RSpec.describe 'API::TreasuresController', type: :request do
     end
   end
 
-  post('create new resource') do
+  post('Create new Treasure') do
     tags 'Treasures'
     consumes 'application/json'
     produces 'application/json'
@@ -91,7 +91,7 @@ RSpec.describe 'API::TreasuresController', type: :request do
     end
 
     get('get treasure location') do
-      tags 'Treasure Locations'
+      tags 'List Treasures'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
 
