@@ -15,6 +15,35 @@ RSpec.configure do |config|
   # By default, the operations defined in spec files are added to the first
   # document below. You can override this behavior by adding a openapi_spec tag to the
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
+  # config.openapi_specs = {
+  #   'v1/swagger.yaml' => {
+  #     openapi: '3.0.1',
+  #     info: {
+  #       title: 'API V1',
+  #       version: 'v1'
+  #     },
+  #     paths: {},
+  #     securityDefinitions: {
+  #       **Bearer**: {
+  #         description: 'Bearer Token',
+  #         type: :apiKey,
+  #         name: 'Authorization', :in => :header
+  #         # name: 'Authorization', in: :header
+  #       }
+  #     },
+  #     servers: [
+  #       {
+  #         url: 'http://{defaultHost}',
+  #         variables: {
+  #           defaultHost: {
+  #             default: 'localhost:3000'
+  #           }
+  #         }
+  #       }
+  #     ]
+  #   }
+  # }
+
   config.openapi_specs = {
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
@@ -23,12 +52,25 @@ RSpec.configure do |config|
         version: 'v1'
       },
       paths: {},
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: :http,
+            scheme: :bearer
+          }
+        }
+      },
+      security: [
+        {
+          bearerAuth: []
+        }
+      ],
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }

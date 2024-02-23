@@ -9,7 +9,6 @@ RSpec.describe 'api/guesses', type: :request do
     get('List all Guesses') do
       tags 'Guesses'
       produces 'application/json'
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
@@ -32,35 +31,34 @@ RSpec.describe 'api/guesses', type: :request do
       tags 'Guesses'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
-      parameter name: 'Authorization', in: :header, type: :string, required: true
-  
+
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
         let!(:guess) { create(:guess) }
         let(:id) { guess.id }
-  
+
         run_test!
       end
-  
+
       response(401, 'unauthorized') do
         let(:Authorization) { nil } # Unauthorized request
         let!(:guess) { create(:guess) }
         let(:id) { guess.id }
-  
+
         run_test! do
           expect(response).to have_http_status(:unauthorized)
         end
       end
-  
+
       response(404, 'not found') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
         let(:id) { -1 } # Invalid ID
-  
+
         run_test! do
           expect(response).to have_http_status(:not_found)
         end
       end
     end
   end
-
 end
+

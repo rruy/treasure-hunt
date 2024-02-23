@@ -9,8 +9,7 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
     get('List all treasure locations') do
       tags 'Treasure Locations'
       produces 'application/json'
-      parameter name: 'Authorization', in: :header, type: :string, required: true
-      
+
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
         run_test!
@@ -38,7 +37,6 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
       },
       required: ['name', 'latitude', 'longitude']
     }
-    parameter name: 'Authorization', in: :header, type: :string, required: true
 
     response(201, 'successful') do
       let(:Authorization) { "#{auth_token['Authorization']}" }
@@ -72,7 +70,6 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
         },
         required: ['name', 'latitude', 'longitude']
       }
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
@@ -97,7 +94,6 @@ RSpec.describe 'API::TreasureLocationsController', type: :request do
       tags 'Treasure Locations'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }

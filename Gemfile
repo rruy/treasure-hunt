@@ -55,6 +55,7 @@ gem 'kaminari'
 gem 'jsonapi-serializer'
 gem 'rswag-api'
 gem 'rswag-ui'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -9,12 +9,6 @@ paths:
       summary: List all Guesses
       tags:
       - Guesses
-      parameters:
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -31,11 +25,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -43,7 +32,7 @@ paths:
           description: unauthorized
         '404':
           description: not found
-  "/api/login":
+  "/api/sessions":
     post:
       summary: create session
       tags:
@@ -73,12 +62,6 @@ paths:
       summary: List all treasure locations
       tags:
       - Treasure Locations
-      parameters:
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -88,12 +71,7 @@ paths:
       summary: create new resource
       tags:
       - Treasure Locations
-      parameters:
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
+      parameters: []
       responses:
         '201':
           description: successful
@@ -128,11 +106,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -166,11 +139,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -181,12 +149,6 @@ paths:
       summary: List all users
       tags:
       - Users
-      parameters:
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -229,11 +191,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -262,11 +219,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -277,19 +229,20 @@ paths:
       summary: List winners
       tags:
       - Winners
-      parameters:
-      - name: Authorization
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
         '401':
           description: unauthorized
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+- bearerAuth: []
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000

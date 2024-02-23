@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     resources :guesses
     resources :winners
     resources :treasure_locations
-
-    post 'login', to: 'sessions#create'
+    resources :sessions, only: [:create]
   end
 end

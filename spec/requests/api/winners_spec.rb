@@ -8,8 +8,7 @@ RSpec.describe 'Api::WinnersController', type: :request do
     get('List winners') do
       tags 'Winners'
       produces 'application/json'
-      parameter name: 'Authorization', in: :header, type: :string, required: true
-      
+
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
         run_test!

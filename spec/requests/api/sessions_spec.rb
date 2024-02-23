@@ -5,7 +5,7 @@ RSpec.describe 'api/sessions', type: :request do
   let!(:user) { create(:user) }
   let!(:auth_token) { user.create_new_auth_token }
 
-  path '/api/login' do
+  path '/api/sessions' do
     post('create session') do
       tags 'Sessions'
       consumes 'application/json'
@@ -28,7 +28,7 @@ RSpec.describe 'api/sessions', type: :request do
       response(401, 'unauthorized') do
         let(:Authorization) { nil }
         let(:payload) { { email: '', password: 'password' } } # Invalid payload
-        
+
         run_test! do
           expect(response).to have_http_status(:unauthorized)
         end

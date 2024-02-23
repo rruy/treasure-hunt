@@ -9,7 +9,6 @@ RSpec.describe 'API::UsersController', type: :request do
     get('List all users') do
       tags 'Users'
       produces 'application/json'
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
@@ -66,7 +65,6 @@ RSpec.describe 'API::UsersController', type: :request do
         },
         required: ['email', 'password']
       }
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
@@ -91,7 +89,6 @@ RSpec.describe 'API::UsersController', type: :request do
       tags 'Users'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
-      parameter name: 'Authorization', in: :header, type: :string, required: true
 
       response(200, 'successful') do
         let(:Authorization) { "#{auth_token['Authorization']}" }
