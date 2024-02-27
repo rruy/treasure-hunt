@@ -251,11 +251,16 @@ paths:
           description: successful
         '401':
           description: unauthorized
-  "/api/winners?page=1":
+  "/api/winners":
     get:
       summary: List winners
       tags:
       - Winners
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
       responses:
         '200':
           description: successful
